@@ -761,3 +761,363 @@ touch .hiddenfile
 ls -la | grep "^\."
 ```
 
+<br /><hr /><br />
+
+Here are **clear, structured answers** for your CAT and preparation.
+
+---
+
+# 2. PROTOCOLS
+
+## DNS
+
+What is
+Domain Name System maps domain names to IP addresses.
+
+Role
+Helps users access websites using names instead of IPs.
+
+Process
+• User requests domain
+• DNS server resolves to IP
+• Browser connects to server
+
+Failure symptoms
+• Website not loading
+• DNS errors
+
+Solution
+• Restart DNS service
+• Check `/etc/resolv.conf`
+• Use public DNS like 8.8.8.8
+
+Effect of failure
+Users cannot access websites.
+
+---
+
+## DHCP
+
+What is
+Dynamic Host Configuration Protocol assigns IP addresses automatically.
+
+Role
+Eliminates manual IP configuration.
+
+Process
+DORA process
+• Discover
+• Offer
+• Request
+• Acknowledge
+
+Failure symptoms
+• No IP assigned
+• Network unreachable
+
+Solution
+• Restart DHCP server
+• Check network cables
+• Assign static IP
+
+Effect of failure
+Devices cannot join network.
+
+---
+
+## HTTP
+
+What is
+Protocol for transferring web data.
+
+Role
+Used to load web pages.
+
+Process
+• Client sends request
+• Server responds with content
+
+Failure symptoms
+• Page not loading
+• 404 or 500 errors
+
+Solution
+• Restart web server
+• Check server logs
+
+Effect of failure
+Web services unavailable.
+
+---
+
+## SSL
+
+What is
+Secure Socket Layer encrypts communication.
+
+Role
+Protects data during transmission.
+
+Process
+• Client requests secure connection
+• Server sends certificate
+• Encryption established
+
+Failure symptoms
+• Browser security warning
+• Certificate error
+
+Solution
+• Renew certificate
+• Configure HTTPS properly
+
+Effect of failure
+Data exposed to attackers.
+
+---
+
+## FTP
+
+What is
+File Transfer Protocol for transferring files.
+
+Role
+Used for uploading and downloading files.
+
+Process
+• Client connects
+• Authenticates
+• Transfers files
+
+Failure symptoms
+• Connection refused
+• Login failure
+
+Solution
+• Check FTP service
+• Verify credentials
+
+Effect of failure
+File transfer disrupted.
+
+---
+
+## FMTP
+
+Likely typo for SMTP or TFTP
+
+If FMTP expected
+Clarify with lecturer
+
+If TFTP
+
+What is
+Simple file transfer protocol without authentication
+
+Role
+Used in booting devices
+
+Failure
+Security risk due to no encryption
+
+---
+
+## SMTP
+
+What is
+Simple Mail Transfer Protocol for sending emails.
+
+Role
+Handles outgoing mail.
+
+Process
+• Client sends mail
+• Mail server forwards
+
+Failure symptoms
+• Emails not sent
+
+Solution
+• Check mail server
+• Verify SMTP port
+
+Effect
+Email communication fails.
+
+---
+
+## SSH
+
+What is
+Secure Shell for remote login.
+
+Role
+Secure remote server access.
+
+Process
+• Client connects
+• Authentication
+• Secure session established
+
+Failure symptoms
+• Connection refused
+• Authentication error
+
+Solution
+• Check SSH service
+• Verify keys
+
+Effect
+No remote administration access.
+
+---
+
+# 3. TECHNOLOGIES
+
+## RAID
+
+What is
+Redundant Array of Independent Disks combines multiple disks.
+
+Why needed
+Improve performance and data safety.
+
+How it works
+Data split or mirrored across disks.
+
+Advantages
+• Data redundancy
+• Improved speed
+
+Disadvantages
+• Cost
+• Complex setup
+
+Use case
+Servers and databases
+
+Challenges
+Disk failure handling
+
+Effect of failure
+Data loss
+
+Solution
+Use RAID backups and monitoring.
+
+---
+
+## Docker
+
+What is
+Container platform for running applications.
+
+Why needed
+Consistent environment across systems.
+
+How it works
+Packages app with dependencies into container.
+
+Advantages
+• Lightweight
+• Fast deployment
+
+Disadvantages
+• Security concerns
+• Learning curve
+
+Use case
+Microservices
+
+Challenges
+Container management
+
+Effect of failure
+Application downtime
+
+Solution
+Use orchestration tools like Kubernetes.
+
+---
+
+## Virtualization
+
+What is
+Running multiple virtual machines on one physical machine.
+
+Why needed
+Efficient resource usage.
+
+How it works
+Hypervisor creates virtual environments.
+
+Advantages
+• Cost saving
+• Flexibility
+
+Disadvantages
+• Performance overhead
+
+Use case
+Cloud computing
+
+Challenges
+Resource allocation
+
+Effect of failure
+Multiple systems affected
+
+Solution
+Use backup and failover systems.
+
+---
+
+## Active Directory
+
+What is
+Microsoft directory service for managing users and resources.
+
+Why needed
+Centralized authentication and control.
+
+How it works
+Stores user accounts and permissions.
+
+Advantages
+• Central management
+• Security control
+
+Disadvantages
+• Complex setup
+
+Use case
+Enterprise networks
+
+Challenges
+Maintenance and security
+
+Effect of failure
+Users cannot log in
+
+Solution
+Use backup domain controllers.
+
+---
+
+# QUICK EXAM SUMMARY
+
+DNS resolves names
+DHCP assigns IP
+HTTP loads web
+SSL secures data
+FTP transfers files
+SMTP sends mail
+SSH remote access
+
+RAID storage safety
+Docker app containers
+Virtualization multiple systems
+Active Directory user control
+
+---
+
