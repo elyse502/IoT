@@ -656,14 +656,44 @@ public class Employee extends JFrame {
             resLabel.setText("Invalid input! Please enter valid numbers.");
         }
     }
-    ```
+  ```
 
-    ## Exit
-    ```groovy
-    System.exit(0);
-    ```
+  ## Exit
+  ```groovy
+  System.exit(0);
+  ```
 </details>
 
+<br/><hr/><br/>
 
+<details>
+  <summary>DB Connection</summary>
+
+  ## Script btn
+  ```groovy
+  String code = text1.getText();
+  String name = text2.getText();
+  try {
+      Class.forName("com.mysql.cj.jdbc.Driver");
+      
+      String url = "jdbc:mysql://localhost:3306/school";
+      String username = "root";
+      String password = "";
+      
+      Connection conn = DriverManager.getConnection(url, username, password);
+      System.out.println("CONNECTED SUCCESSFULLY");
+      
+      // Insert Records!!!
+      Statement stm = conn.createStatement();
+      
+      String sql = "INSERT INTO student (code, name) VALUES ('" + code + "', '" + name + "')";
+      stm.executeUpdate(sql);
+      JOptionPane.showMessageDialog(this, "ADDED SUCCESSFULLY\n" + sql);
+      
+  } catch(Exception e) {
+      System.out.println("ERROR, NOT CONNECTED: " + e.getMessage());
+  }
+  ```
+</details>
 
 
