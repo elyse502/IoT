@@ -696,4 +696,129 @@ public class Employee extends JFrame {
   ```
 </details>
 
+<br/><hr/><br/>
+
+<details>
+  <summary>JavaBeans</summary>
+
+  # JavaBeans
+  Write a Java class named Student that follows JavaBeans conventions. The class should include a 
+  private property called name to store the student’s name. It should provide a no-argument 
+  constructor, along with methods that allow setting and retrieving the value of the name property. 
+  The class must also support object serialization so that its objects can be saved to a file.
+
+  ```groovy
+  /*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package JavaBeans;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author Elysee NIYIBIZI
+ */
+
+public class Student implements Serializable {
+
+    // Private property
+    private String name;
+
+    // No-argument constructor
+    public Student() {
+    }
+
+    // Getter method
+    public String getName() {
+        return name;
+    }
+
+    // Setter method
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+---
+
+By adding a main application class named MainApp that demonstrates how a Student object can 
+be saved to a file and later loaded back into the program. The program should first create a Student 
+object and assign a name to it. It should then save the object into a file using object serialization. 
+After saving the object, the program should read the same object back from the file using 
+deserialization and display the student’s name on the screen. During execution, the program must 
+print confirmation messages. When the object is successfully saved, it should display "Object has 
+been serialized (saved)." When the object is successfully loaded, it should display "Object has been 
+deserialized (loaded)." Finally, it should display the student’s name in the format "Student Name: 
+Mugabo Mohammed".
+
+```groovy
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package JavaBeans;
+
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.IOException;
+
+/**
+ *
+ * @author Elysee NIYIBIZI
+ */
+
+public class MainApp {
+
+    public static void main(String[] args) {
+
+        // Create object
+        Student student = new Student();
+        student.setName("Mugabo Mohammed");
+
+        // File name
+        String filename = "student.ser";
+
+        // -------- SERIALIZATION (Saving) --------
+        try {
+            FileOutputStream fileOut = new FileOutputStream(filename);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+
+            out.writeObject(student);
+            out.close();
+            fileOut.close();
+
+            System.out.println("Object has been serialized (saved).");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // -------- DESERIALIZATION (Loading) --------
+        try {
+            FileInputStream fileIn = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+
+            Student loadedStudent = (Student) in.readObject();
+
+            in.close();
+            fileIn.close();
+
+            System.out.println("Object has been deserialized (loaded).");
+            System.out.println("Student Name: " + loadedStudent.getName());
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+</details>
+
+
+
 
