@@ -1,3 +1,207 @@
+<details>
+  <summary>CAT PREP</summary>
+
+Here are **simple, exam-ready answers**, using your **mysqli pattern + clean HTML + validation**.
+
+---
+
+# QUESTION 1
+
+## a) Form + Insert with validation
+
+```php
+<?php
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "company_db";
+
+$connection = mysqli_connect($host, $username, $password, $database);
+
+if (!$connection) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if(isset($_POST['save'])){
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $position = $_POST['position'];
+    $salary = $_POST['salary'];
+
+    // Validation
+    if($id == "" || $name == "" || $position == "" || $salary == ""){
+        echo "<script>alert('All fields are required');</script>";
+    }
+    elseif(!is_numeric($salary)){
+        echo "<script>alert('Salary must be numeric');</script>";
+    }
+    else{
+        // Check duplicate ID
+        $check = mysqli_query($connection, "SELECT * FROM employees WHERE emp_id='$id'");
+        if(mysqli_num_rows($check) > 0){
+            echo "<script>alert('Employee ID already exists');</script>";
+        } else {
+            $sql = "INSERT INTO employees(emp_id, emp_name, position, salary)
+                    VALUES('$id','$name','$position','$salary')";
+            if(mysqli_query($connection, $sql)){
+                echo "<script>alert('Inserted successfully');</script>";
+            } else {
+                echo "<script>alert('Error inserting');</script>";
+            }
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { font-family: Arial; }
+form { width: 300px; margin: auto; }
+input { width: 100%; padding: 8px; margin: 5px 0; }
+button { width: 100%; padding: 10px; background: blue; color: white; border: none; }
+</style>
+</head>
+<body>
+
+<form method="POST">
+<h3>Add Employee</h3>
+<input type="text" name="id" placeholder="Employee ID">
+<input type="text" name="name" placeholder="Employee Name">
+<input type="text" name="position" placeholder="Position">
+<input type="text" name="salary" placeholder="Salary">
+<button type="submit" name="save">Save</button>
+</form>
+
+</body>
+</html>
+```
+
+---
+
+## b) JavaScript alert (already included above)
+
+Used like this:
+
+```php
+echo "<script>alert('Inserted successfully');</script>";
+```
+
+---
+
+## c) Display records in styled table
+
+```php
+<?php
+$result = mysqli_query($connection, "SELECT * FROM employees");
+?>
+
+<table border="1" cellpadding="10" style="margin:auto; margin-top:20px;">
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Position</th>
+<th>Salary</th>
+</tr>
+
+<?php
+while($row = mysqli_fetch_assoc($result)){
+echo "<tr>
+<td>{$row['emp_id']}</td>
+<td>{$row['emp_name']}</td>
+<td>{$row['position']}</td>
+<td>{$row['salary']}</td>
+</tr>";
+}
+?>
+</table>
+```
+
+---
+
+# QUESTION 2
+
+## A & B JavaScript solution
+
+```html
+<script>
+  let days = prompt("Enter number of absent days:");
+
+  if (days >= 0 && days <= 2) {
+    alert("Status: Normal");
+  } else if (days >= 3 && days <= 5) {
+    alert("Status: Warning");
+  } else if (days >= 6 && days <= 10) {
+    alert("Status: Manager Review");
+  } else if (days > 10) {
+    alert("Status: HR Action Required");
+  } else {
+    alert("Invalid input");
+  }
+</script>
+```
+
+---
+
+# QUESTION 3
+
+## a) PHP function calculateFine()
+
+```php
+<?php
+function calculateFine($daysLate){
+    if($daysLate >= 0 && $daysLate <= 3){
+        return 0;
+    }
+    elseif($daysLate >= 4 && $daysLate <= 7){
+        return 500;
+    }
+    elseif($daysLate >= 8 && $daysLate <= 14){
+        return 1000;
+    }
+    else{
+        return 2000;
+    }
+}
+?>
+```
+
+---
+
+## b) Return message with fine
+
+```php
+<?php
+function calculateFine($daysLate){
+    if($daysLate >= 0 && $daysLate <= 3){
+        $fine = 0;
+    }
+    elseif($daysLate >= 4 && $daysLate <= 7){
+        $fine = 500;
+    }
+    elseif($daysLate >= 8 && $daysLate <= 14){
+        $fine = 1000;
+    }
+    else{
+        $fine = 2000;
+    }
+
+    return "Book is $daysLate days late. Fine: $fine RWF";
+}
+
+// Example
+echo calculateFine(5);
+?>
+```
+
+</details>
+
+<br/><hr/><br/>
+
+<details>
+  <summary>Exam Prep</summary>
+
 # Advanced Web Development - Exam Preparation Guide
 
 # SECTION A
@@ -32,7 +236,7 @@ if ($connection) {
 // Join students and programmes tables to display results
 
 $query = "SELECT students.student_id, students.full_name, students.reg_no,
-                 students.email, programmes.programme_name
+                students.email, programmes.programme_name
           FROM students
           INNER JOIN programmes ON students.programme_id = programmes.programme_id";
 
@@ -1669,8 +1873,8 @@ exit();
 
 <br/><hr/><br/>
 
-<details>
-<summary>Database and Table Creation</summary>
+  <details>
+  <summary>Database and Table Creation</summary>
 
 # Database and Table Creation Scripts
 
@@ -1923,73 +2127,73 @@ if (!$connection) {
 $sql_scripts = [
     // Question 1
     "CREATE DATABASE IF NOT EXISTS student_db;
-     USE student_db;
-     CREATE TABLE IF NOT EXISTS programmes (
-         programme_id INT AUTO_INCREMENT PRIMARY KEY,
-         programme_name VARCHAR(100) NOT NULL
-     );
-     CREATE TABLE IF NOT EXISTS students (
-         student_id INT AUTO_INCREMENT PRIMARY KEY,
-         full_name VARCHAR(100) NOT NULL,
-         reg_no VARCHAR(50) UNIQUE NOT NULL,
-         email VARCHAR(100) UNIQUE NOT NULL,
-         programme_id INT,
-         FOREIGN KEY (programme_id) REFERENCES programmes(programme_id)
-     );",
+    USE student_db;
+    CREATE TABLE IF NOT EXISTS programmes (
+        programme_id INT AUTO_INCREMENT PRIMARY KEY,
+        programme_name VARCHAR(100) NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS students (
+        student_id INT AUTO_INCREMENT PRIMARY KEY,
+        full_name VARCHAR(100) NOT NULL,
+        reg_no VARCHAR(50) UNIQUE NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        programme_id INT,
+        FOREIGN KEY (programme_id) REFERENCES programmes(programme_id)
+    );",
 
     // Question 2
     "CREATE DATABASE IF NOT EXISTS employee_db;
-     USE employee_db;
-     CREATE TABLE IF NOT EXISTS employees (
-         emp_id INT AUTO_INCREMENT PRIMARY KEY,
-         emp_name VARCHAR(100) NOT NULL,
-         department VARCHAR(50) NOT NULL,
-         salary DECIMAL(10, 2) NOT NULL,
-         phone VARCHAR(20) NOT NULL
-     );",
+    USE employee_db;
+    CREATE TABLE IF NOT EXISTS employees (
+        emp_id INT AUTO_INCREMENT PRIMARY KEY,
+        emp_name VARCHAR(100) NOT NULL,
+        department VARCHAR(50) NOT NULL,
+        salary DECIMAL(10, 2) NOT NULL,
+        phone VARCHAR(20) NOT NULL
+    );",
 
     // Question 4
     "CREATE DATABASE IF NOT EXISTS stock_db;
-     USE stock_db;
-     CREATE TABLE IF NOT EXISTS products (
-         product_id INT AUTO_INCREMENT PRIMARY KEY,
-         product_name VARCHAR(100) NOT NULL,
-         price DECIMAL(10, 2) NOT NULL,
-         quantity INT NOT NULL DEFAULT 0
-     );",
+    USE stock_db;
+    CREATE TABLE IF NOT EXISTS products (
+        product_id INT AUTO_INCREMENT PRIMARY KEY,
+        product_name VARCHAR(100) NOT NULL,
+        price DECIMAL(10, 2) NOT NULL,
+        quantity INT NOT NULL DEFAULT 0
+    );",
 
     // Question 5
     "CREATE DATABASE IF NOT EXISTS academic_db;
-     USE academic_db;
-     CREATE TABLE IF NOT EXISTS modules (
-         module_id INT AUTO_INCREMENT PRIMARY KEY,
-         module_name VARCHAR(100) NOT NULL,
-         module_code VARCHAR(20) NOT NULL UNIQUE
-     );
-     CREATE TABLE IF NOT EXISTS marks (
-         marks_id INT AUTO_INCREMENT PRIMARY KEY,
-         student_name VARCHAR(100) NOT NULL,
-         reg_no VARCHAR(50) NOT NULL,
-         cat_60 DECIMAL(5, 2),
-         exam_40 DECIMAL(5, 2),
-         total DECIMAL(5, 2),
-         grade CHAR(1),
-         module_id INT,
-         FOREIGN KEY (module_id) REFERENCES modules(module_id)
-     );",
+    USE academic_db;
+    CREATE TABLE IF NOT EXISTS modules (
+        module_id INT AUTO_INCREMENT PRIMARY KEY,
+        module_name VARCHAR(100) NOT NULL,
+        module_code VARCHAR(20) NOT NULL UNIQUE
+    );
+    CREATE TABLE IF NOT EXISTS marks (
+        marks_id INT AUTO_INCREMENT PRIMARY KEY,
+        student_name VARCHAR(100) NOT NULL,
+        reg_no VARCHAR(50) NOT NULL,
+        cat_60 DECIMAL(5, 2),
+        exam_40 DECIMAL(5, 2),
+        total DECIMAL(5, 2),
+        grade CHAR(1),
+        module_id INT,
+        FOREIGN KEY (module_id) REFERENCES modules(module_id)
+    );",
 
     // Question 6
     "CREATE DATABASE IF NOT EXISTS user_db;
-     USE user_db;
-     CREATE TABLE IF NOT EXISTS users (
-         user_id INT AUTO_INCREMENT PRIMARY KEY,
-         full_name VARCHAR(100) NOT NULL,
-         email VARCHAR(100) UNIQUE NOT NULL,
-         country VARCHAR(50) NOT NULL,
-         gender ENUM('Male', 'Female', 'Other') NOT NULL,
-         password VARCHAR(255) NOT NULL,
-         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-     );"
+    USE user_db;
+    CREATE TABLE IF NOT EXISTS users (
+        user_id INT AUTO_INCREMENT PRIMARY KEY,
+        full_name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        country VARCHAR(50) NOT NULL,
+        gender ENUM('Male', 'Female', 'Other') NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );"
 ];
 
 foreach ($sql_scripts as $sql) {
@@ -2006,4 +2210,6 @@ echo "<br>🎉 All databases and tables created successfully!";
 ?>
 ```
 
+  </details>
+    
 </details>
